@@ -1,0 +1,83 @@
+     zookeeper:
+
+        image: openjdk:8-jdk
+
+        command: bash -c "cd /home/kafka && ./start.sh"
+
+        logging:
+
+          driver: "json-file"
+
+          options:
+
+            max-file: 5
+
+            max-size: 10m
+
+        environment:
+
+           USER_ID: 1000
+
+        volumes:
+
+          - /home/project/app/zookeeper:/home/kafka
+
+          - /home/project/data/zookeeper:/data
+
+        networks:
+
+          - network_pro1
+
+        deploy:
+
+          restart_policy:
+
+            condition: any
+
+          placement:
+
+            constraints: [node.role == manager]
+
+     kafka:
+
+        image: openjdk:8-jdk
+
+        command: bash -c "cd /home/kafka && ./start.sh"
+
+        logging:
+
+          driver: "json-file"
+
+          options:
+
+            max-file: 5
+
+            max-size: 10m
+
+        environment:
+
+           USER_ID: 1000
+
+        volumes:
+
+          - /home/project/app/kafka:/home/kafka
+
+          - /home/project/data/kafka:/data
+
+        ports:
+
+          - 19092:19092
+
+        networks:
+
+          - network_pro1
+
+        deploy:
+
+          restart_policy:
+
+            condition: any
+
+          placement:
+
+            constraints: [node.role == manager]
